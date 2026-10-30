@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 380" width="760" height="380" font-family="-apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <title>Cómo decide VBoost Fix qué modelo se envía</title>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0 L10 5 L0 10 z" fill="#59636e"/>
+    </marker>
+  </defs>
+  <style>
+    .card { fill: #ffffff; stroke: #d0d7de; }
+    .box { fill: #f6f8fa; stroke: #8c959f; }
+    .hook { fill: #ddf4ff; stroke: #0969da; }
+    .yes { fill: #dafbe1; stroke: #1a7f37; }
+    .no { fill: #f6f8fa; stroke: #8c959f; }
+    .k { fill: #1f2328; font-size: 13px; font-weight: 600; }
+    .t { fill: #1f2328; font-size: 13px; }
+    .s { fill: #59636e; font-size: 12px; }
+    .m { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .ln { stroke: #59636e; stroke-width: 1.5; fill: none; }
+  </style>
+  <rect class="card" x="0.5" y="0.5" width="759" height="379" rx="8"/>
+
+  <text class="s" x="30" y="30">Dentro de Google Fotos, con Pixelify en «Pixel XL»</text>
+
+  <rect class="box" x="30" y="44" width="280" height="56" rx="6"/>
+  <text class="k" x="46" y="67">Fotos sube un archivo</text>
+  <text class="s m" x="46" y="87">PXL_….jpg · VB-01.COVER · VB-02.MAIN</text>
+  <line class="ln" x1="170" y1="100" x2="170" y2="128" marker-end="url(#a)"/>
+
+  <rect class="box" x="30" y="130" width="280" height="56" rx="6"/>
+  <text class="k" x="46" y="153">Crea el elemento en la nube</text>
+  <text class="s m" x="46" y="173">PhotosCreateMediaItems + DeviceInfo</text>
+  <line class="ln" x1="170" y1="186" x2="170" y2="214" marker-end="url(#a)"/>
+
+  <rect class="hook" x="30" y="216" width="280" height="56" rx="6"/>
+  <text class="k" x="46" y="239" fill="#0969da">VBoost Fix revisa los nombres</text>
+  <text class="s" x="46" y="259">¿Todos son VB-02 crudos?</text>
+
+  <path class="ln" d="M 310 244 L 345 244 L 345 96 L 378 96" marker-end="url(#a)"/>
+  <text class="k" x="352" y="168">sí</text>
+  <path class="ln" d="M 345 244 L 345 300 L 378 300" marker-end="url(#a)"/>
+  <text class="k" x="352" y="280">no</text>
+
+  <rect class="yes" x="380" y="44" width="350" height="104" rx="6"/>
+  <text class="k" x="396" y="67">Envía el modelo real</text>
+  <text class="s m" x="396" y="87">model = Pixel 9 Pro XL · manufacturer = Google</text>
+  <text class="t" x="396" y="111">El servidor lo marca como boost</text>
+  <text class="s" x="396" y="131">blanford_format = 1 → se procesa y en ~1 h llega VB-03</text>
+
+  <rect class="no" x="380" y="248" width="350" height="104" rx="6"/>
+  <text class="k" x="396" y="271">No cambia nada</text>
+  <text class="s m" x="396" y="291">model = Pixel XL (lo que pone Pixelify)</text>
+  <text class="t" x="396" y="315">Fotos, videos normales y el VB-01.COVER</text>
+  <text class="s" x="396" y="335">se suben como siempre, sin cobrar cuota</text>
+
+  <text class="s" x="30" y="322">Solo cambia el objeto de esa petición;</text>
+  <text class="s" x="30" y="340">android.os.Build sigue diciendo Pixel XL.</text>
+</svg>

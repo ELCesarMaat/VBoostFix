@@ -27,6 +27,10 @@ El módulo engancha el constructor de la petición `PhotosCreateMediaItems` dent
 
 Solo modifica el objeto de esa llamada y no toca `android.os.Build`: el resto de Fotos sigue viendo un Pixel XL.
 
+![Flujo de decisión de VBoost Fix](docs/flujo-vboostfix.svg)
+
+Por qué solo el `VB-02`: en las pruebas, subir el `VB-01.COVER` como «Pixel XL» y únicamente el `VB-02.MAIN` con el modelo real bastó para que el servidor procesara el boost, y así la vista previa no cobra cuota. Si en tu caso no se procesa, en `Hook.java` está `INCLUDE_COVER` para cambiar también la identidad del COVER.
+
 ## Requisitos
 
 - Un Pixel con Video Boost (probado en un Pixel 9 Pro XL con Android 17).
@@ -66,6 +70,24 @@ VBoostFix: PhotosCreateMediaItems [PXL_20260101_120500000.VB-02.MAIN.mp4]: model
 Si sale `no se pudo enganchar blkg(cshs)`, tu versión de Fotos no coincide.
 
 Para confirmarlo en la base de datos de Fotos, usa `bd/poll.sh` (ver abajo): el `VB-02.MAIN` debe aparecer en `remote_media` con `blanford_format=1` y `can_play_video=0`. Una hora después aproximadamente llega el `VB-03.MAIN`.
+
+### Paso a paso: probar con un boost
+
+1. Deja `adb logcat -s VBoostFix` corriendo en la PC.
+2. Graba un video corto con **Video Boost** activado en la Cámara de Pixel.
+3. Espera a que Fotos lo suba (o abre el video y pulsa «Crear copia de seguridad ahora»). Primero sube el COVER y luego el MAIN.
+4. En el log debe aparecer `VB-02.MAIN.mp4]: modelo Pixel XL -> Pixel 9 Pro XL` (con el modelo de tu teléfono).
+5. Al rato, en el visor de Fotos el video muestra que se está mejorando. Cerca de una hora después, Fotos descarga `VB-03.MAIN.mp4` y el video aparece mejorado.
+
+### Problemas comunes
+
+| Síntoma | Causa probable | Qué hacer |
+|---|---|---|
+| No sale nada con `logcat -s VBoostFix` | El módulo no está activo o Fotos no se reinició | Actívalo en LSPosed con alcance Google Fotos y haz `am force-stop com.google.android.apps.photos`. |
+| `no se pudo enganchar blkg(cshs)` | Tu versión de Fotos no es la 7.96.0 | Instala esa versión o adapta `Hook.java` (ver abajo). |
+| `lote mixto (...); sin cambio` | Fotos mandó el boost junto con otros archivos en la misma llamada | Sube ese video solo, con «Crear copia de seguridad ahora». |
+| El MAIN sale con `blanford_format=NULL` | Se subió antes de activar el módulo | Ese ya no se procesará; prueba con un boost nuevo. |
+| Hay dos líneas «cargado en …» | Tienes dos copias del módulo activas | Deja solo una activa en LSPosed. |
 
 ### Qué significa `blanford_format`
 
