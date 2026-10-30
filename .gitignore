@@ -1,0 +1,25 @@
+# Compilación (build.ps1 la regenera)
+VBoostFixApp/build/
+
+# Claves de firma: nunca en el repositorio
+*.keystore
+*.jks
+
+# Herramientas y código de terceros (build.ps1 descarga la API de Xposed)
+tools/
+fuentes/
+PixelifyGPhotosPlus/
+
+# APK y datos sacados del teléfono: no se publican
+apk/
+bd/*/
+capturas/
+respaldo_boost/
+*.apk
+*.db
+*.db-wal
+*.db-shm
+*.mp4
+
+# Configuración local
+.localConfig/

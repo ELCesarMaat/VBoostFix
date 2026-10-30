@@ -1,0 +1,5 @@
+* text=auto
+# Se ejecutan en el teléfono (sh de Android) o en Git Bash: siempre LF
+*.sh text eol=lf
+*.py text eol=lf
+VBoostFixApp/assets/xposed_init text eol=lf

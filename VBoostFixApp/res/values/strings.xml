@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">VBoost Fix</string>
+    <string name="xposed_description">Envía el modelo real del teléfono solo al crear en la nube los videos Video Boost (VB-02), para que se procesen aunque Pixelify esté activo.</string>
+    <string-array name="xposed_scope">
+        <item>com.google.android.apps.photos</item>
+    </string-array>
+</resources>
